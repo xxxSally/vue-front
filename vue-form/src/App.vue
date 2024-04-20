@@ -1,6 +1,11 @@
 <template>
+  <todoHeader />
+  <todoInput />
+  <todoList v-bind:propsdata="todoItems"/>
+  <todoFooter />
 
-  <div class="black-bg" v-if="modal == true">
+
+  <!-- <div class="black-bg" v-if="modal == true">
     <div class="white-bg">
       <h4>상세페이지</h4>
       <p>상세페이지내용</p>
@@ -8,81 +13,56 @@
     </div>
   </div>
 
-  <div class="menu">
-    <a v-for="(item, index) in menu" :key="index"> {{ item }} </a>
-  </div>
-  
-  
   <h1>{{ logo }}</h1>
-  <!-- <div v-for="(item, index) in products" :key="index"> -->
-
-    <div v-for="item in data" :key="item.id">
-      <img src="./assets/room1.jpg" class="room-img">
-      <h4 :style="style" @click="btnModalOpenHandler">{{ item.title }}</h4>
-      <p>{{ item.price }} 만원</p>
-      <p>{{ item.content }}</p>
-    </div>
-
-  <!-- <div>
+  <div v-for="item in data" :key="item.id">
     <img src="./assets/room1.jpg" class="room-img">
-    <h4 :style="style" @click="btnModalOpenHandler">{{ products[0] }}</h4>
-    <p>{{ money[0] }} 만원</p>
-    <button @click="btnCountClick(0)">허위매물신고</button>
-    <span>신고수 : {{ countArr[0] }}</span>
+    <h4 :style="style" @click="btnModalOpenHandler">{{ item.title }}</h4>
+    <p>{{ item.price }} 만원</p>
+    <p>{{ item.content }}</p>
   </div> -->
-  <!-- <div>
-    <img src="./assets/room2.jpg" class="room-img">
-    <h4 @click="btnModalOpenHandler">{{ products[1] }}</h4>
-    <p>{{ money[1] }} 만원</p>
-    <button @click="btnCountClick(1)">허위매물신고</button>
-    <span>신고수 : {{ countArr[1] }}</span>
-  </div> -->
-  <!-- <div>
-    <img src="./assets/room3.jpeg" class="room-img">
-    <h4 @click="btnModalOpenHandler">{{ products[2] }}</h4>
-    <p>{{ money[2] }} 만원</p>
-    <button @click="btnCountClick(2)">허위매물신고</button>
-    <span>신고수 : {{ countArr[2] }}</span>
-  </div> -->
+
 </template>
 
 <script>
+  import data from './data.js';
+  import Header from './components/Header.vue'
+  import Footer from './components/Footer.vue'
+  import Input from './components/TodoInput.vue'
+  import List from './components/TodoList.vue'
+  // const products = ['역삼동 원룸', '천호동 원룸', '방배동 원룸']
+  // const money = ['1000', '2000', '3000'];
 
-let products = ['역삼동 원룸', '천호동 원룸', '방배동 원룸']
-let money = ['1000', '2000', '3000'];
-
-import data from './data.js';
 // import {apple, apple2} from './data.js';
-
-export default {
-  name: 'App',
-  data(){
-    return {
-      logo : '부동산'
-      , menu : ['Home', 'Shop', 'About']
-      , products : products
-      , money : money
-      , countArr : [0, 0, 0]
-      , modal : false
-      , data : data
-    }
-  },
-  methods : {
-    btnCountClick (index) {
-      this.countArr[index] += 1 //this == data의 object
+  export default {
+    name: 'App',
+    props: [
+      'propsdata'
+    ],
+    data(){
+      return {
+        data : data
+        
+      }
     },
-    btnModalOpenHandler () {
-      this.modal = true
+    methods : {
+      btnCountClick (index) {
+        this.countArr[index] += 1 //this == data의 object
+      },
+      btnModalOpenHandler () {
+        this.modal = true
+      },
+      btnClosedModalHandler () {
+        this.modal = false
+      }
+      
     },
-    btnClosedModalHandler () {
-      this.modal = false
+    components: {
+      todoHeader : Header
+        , todoFooter : Footer
+        , todoList : List
+        , todoInput : Input
     }
-    
-  },
-  components: {
-
   }
-}
 </script>
 
 <style>
